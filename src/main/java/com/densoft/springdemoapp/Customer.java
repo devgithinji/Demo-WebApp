@@ -1,5 +1,7 @@
 package com.densoft.springdemoapp;
 
+import com.densoft.springdemoapp.validation.CourseCode;
+
 import javax.validation.constraints.*;
 
 public class Customer {
@@ -14,7 +16,9 @@ public class Customer {
     @Max(value = 10, message = "must be less than or equal to 10")
     private Integer freePasses;
 
-    @Pattern(regexp = "^[a-zA-Z0-9]{5}",message = "only 5 chars/digits")
+    @CourseCode
+    private String courseCode;
+    @Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "only 5 chars/digits")
     private String postalCode;
 
 
@@ -43,6 +47,14 @@ public class Customer {
 
     public void setFreePasses(Integer freePasses) {
         this.freePasses = freePasses;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 
     public String getPostalCode() {

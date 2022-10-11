@@ -15,6 +15,10 @@
 <h1>main menu</h1>
 <img src="${pageContext.request.contextPath}/resources/images/hello.png" alt="hello image">
 <hr>
-<a href="showForm">Hello World Form</a>
+<a href="hello/showForm">Hello World Form</a>
+<br><br>
+<a href="student/showForm">Student Show Form</a>
+<br><br>
+<a href="customer/showForm">Customer Show Form</a>
 </body>
 </html>

@@ -9,12 +9,12 @@
 <html>
 <head>
     <title>main menu</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body>
-<h1>main menu</h1>
-<img src="${pageContext.request.contextPath}/resources/images/hello.png" alt="hello image">
-<hr>
-<a href="showForm">Hello World Form</a>
+<form action="processFormVersionTwo" method="POST">
+
+    <input type="text" name="studentName" placeholder="What's your name?">
+    <input type="submit" value="submit">
+</form>
 </body>
 </html>

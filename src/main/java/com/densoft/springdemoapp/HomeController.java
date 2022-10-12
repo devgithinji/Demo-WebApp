@@ -1,11 +1,11 @@
 package com.densoft.springdemoapp;
 
+import com.densoft.springdemoapp.entity.Student;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 @Controller
 public class HomeController {
@@ -13,17 +13,31 @@ public class HomeController {
     @RequestMapping("/")
     public String showPage() {
 
-        String jdbcUrl = "jdbc:mysql://localhost:3306/hb_student_tracker?useSSL=false";
-        String user = "dennis";
-        String password = "password";
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Student.class)
+                .buildSessionFactory();
+
+        Session session = factory.getCurrentSession();
 
         try {
-            System.out.println("connecting to database");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(jdbcUrl, user, password);
-            System.out.println("connection successful");
+            //create a student object
+            Student student = new Student("dennis", "githinji", "wakahiad@gmail.com");
+
+            //start transaction
+            session.beginTransaction();
+
+            //save the student
+            session.save(student);
+
+            //commit the transaction
+            session.getTransaction().commit();
+
+            System.out.println("done");
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
+            factory.close();
         }
 
         return "main-menu";

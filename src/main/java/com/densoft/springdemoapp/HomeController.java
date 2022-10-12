@@ -21,9 +21,8 @@ public class HomeController {
         Session session = factory.getCurrentSession();
 
         try {
-            //create a student object
-            Student student = new Student("dennis", "githinji", "wakahiad@gmail.com");
-
+            //create 3 student objects
+            Student student = new Student("dennis", "githinji", "dennis@gmail.com");
             //start transaction
             session.beginTransaction();
 
@@ -31,6 +30,16 @@ public class HomeController {
             session.save(student);
 
             //commit the transaction
+            session.getTransaction().commit();
+
+            //get a new session and start transaction
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            // retrieve student based on the id: primary key
+            System.out.println("Saved student. Generated Id. "+student.getId());
+            Student myStudent = session.get(Student.class, student.getId());
+            System.out.println("Get complete student: "+myStudent);
+            //commit transaction
             session.getTransaction().commit();
 
             System.out.println("done");

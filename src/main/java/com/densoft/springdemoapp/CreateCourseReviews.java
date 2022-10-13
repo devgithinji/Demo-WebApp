@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class CreateCourses {
+public class CreateCourseReviews {
 
     public static void main(String[] args) {
         SessionFactory factory = new Configuration()
@@ -25,24 +25,17 @@ public class CreateCourses {
 
             session.getTransaction().begin();
 
-            int id = 2;
+            int id = 10;
 
-            Instructor instructor = session.get(Instructor.class, id);
+            Course course = session.get(Course.class, id);
 
-            Course tempCourse1 = new Course("Digital Marketing");
-            Course tempCourse2 = new Course("SEO");
-            Course tempCourse3 = new Course("Networking");
+            Review reviewOne = new Review("Good trial");
+            Review reviewTwo = new Review("Talented!");
 
-            instructor.add(tempCourse1);
-            instructor.add(tempCourse2);
-            instructor.add(tempCourse3);
+            course.add(reviewOne);
+            course.add(reviewTwo);
 
-            session.save(tempCourse1);
-            session.save(tempCourse2);
-            session.save(tempCourse3);
-
-            System.out.println("instructor " + instructor);
-            System.out.println("courses " + instructor.getCourses());
+            session.save(course);
 
             session.getTransaction().commit();
 

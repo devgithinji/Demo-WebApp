@@ -1,6 +1,12 @@
 package com.densoft.springdemoapp.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "student")
@@ -18,13 +24,23 @@ public class Student {
     @Column(name = "email")
     private String email;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+            org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
+    @JoinTable(name = "course_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses;
+
     public Student() {
+        courses = new HashSet<>();
     }
 
     public Student(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.courses = new HashSet<>();
     }
 
     public int getId() {
@@ -59,6 +75,15 @@ public class Student {
         this.email = email;
     }
 
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -67,5 +92,10 @@ public class Student {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public void add(Course course) {
+        courses.add(course);
+        course.getStudents().add(this);
     }
 }
